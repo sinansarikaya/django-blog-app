@@ -1,19 +1,26 @@
 {% extends '../base.html' %}
 
 {% block title %}
-    Edit Blog
+Edit - {{form.instance.title}} 
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <h2 class="text-center my-4">Edit Blog</h2>
     <div class="card bg-light shadow p-4">
-        <form>
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
+            <div class="form-group mb-3">
+                {% if form.instance.featured_image %}
+                    <img id="img-preview" src="{{ form.instance.featured_image.url }}" alt="Featured Image" style="max-width: 100%; max-height: 300px; margin-top: 10px;">
+                {% else %}
+                    <img id="img-preview" src="#" alt="Featured Image" style="max-width: 100%; max-height: 300px; margin-top: 10px; display: none;">
+                {% endif %}
+            </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Add Blog</button>
+                <button type="submit" class="btn btn-primary">Update Blog</button>
             </div>
         </form>
     </div>
