@@ -7,8 +7,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = RichTextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    summary = models.TextField()
-    featured_image = models.ImageField(upload_to='featured_images/', null=True, blank=True)
+    summary = models.TextField(max_length=255)
+    featured_image = models.ImageField(upload_to='featured_images/', null=False)
     status = models.CharField(max_length=255, choices=[('draft', 'Draft'), ('published', 'Published')])
     # categories = models.ManyToManyField(Category, through='PostCategory')
     # tags = models.ManyToManyField(Tag, through='PostTag') 
@@ -23,9 +23,11 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+    def save(self, *args, **kwargs):
+        if self.status == 'published' and not self.published_date:
+            self.published_date = timezone.now()
+        super().save(*args, **kwargs)
+        
 
 
 class Comment(models.Model):

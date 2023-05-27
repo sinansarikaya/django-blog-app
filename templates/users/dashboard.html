@@ -9,7 +9,7 @@
     <h2 class="text-center my-4">Dashboard</h2>
     <div class="card bg-light p-4">
         <div class="d-flex justify-content-end mb-2">
-            <a href="{% url 'add_blog' %}" class="btn btn-success">Add Blog</a>
+            <a href="{% url 'add_post' %}" class="btn btn-success">Add Blog</a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -17,7 +17,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">Published Date</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -26,9 +27,10 @@
                     <tr>
                         <th scope="row">{{ post.id }}</th>
                         <td>{{ post.title }}</td>
-                        <td>{{ post.date }}</td>
+                        <td>{{ post.published_date|date:"F d, Y" }}</td>
+                        <td>{{ post.status}}</td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{% url 'post_edit' post.slug %}" class="btn btn-primary btn-sm">Edit</a>
                             <a href="#" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                     </tr>

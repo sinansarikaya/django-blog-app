@@ -142,3 +142,11 @@ LOGIN_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+CKEDITOR_CONFIGS = {
+        'default' : {
+            'toolbar' : 'full',
+            'height' : 400,
+            'width': '100%', 
+        }
+    }
