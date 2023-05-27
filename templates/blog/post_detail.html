@@ -1,0 +1,59 @@
+{% extends '../base.html' %}
+
+{% block title %} 
+    {{ post.title }} - Blog Post 
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card mb-3">
+        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}" height="400">
+        <div class="card-body">
+            <p>By <span class="font-weight-bold">{{ post.author }}</span></p>  
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content | safe }}</p>
+            <p class="card-text"><small class="text-muted">Published on: {{ post.published_date }}</small></p>          
+        </div>
+    </div>
+    
+    <hr>
+    
+    {% if user.is_authenticated %}
+    <h4>Comments</h4>
+    {% else %}
+    <p>Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">sign up</a> to add a comment.</p>
+    {% endif %}
+
+    {% for comment in comments %}
+        <div class="card mb-3">
+            <div class="card-header">
+                {% if comment.user.is_authenticated %}
+                    <span class="font-weight-bold">Comment by:</span>             
+                {% else %}    
+                    <span class="font-weight-bold">{{ comment.author }} said:</span> 
+                {% endif %}
+                <span class="float-right">{{ comment.created_at }}</span>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ comment.text }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+    <hr>
+    <h4>Add a comment</h4>
+    <form method="POST">
+        {% csrf_token %}       
+        <div class="form-group mb-3">
+            <label for="content">Comment</label>
+            <textarea class="form-control" name="content" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% endif %}
+    
+</div>
+{% endblock %}
