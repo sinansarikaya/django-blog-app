@@ -9,9 +9,9 @@ def post_list(request):
 def post_detail(request, slug):
     pass
 
-@login_required
+# @login_required
 def post_create(request):
-    pass
+    return render(request, 'blog/add_blog.html')
 
 @login_required
 def post_edit(request, slug):
