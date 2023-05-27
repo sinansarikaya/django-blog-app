@@ -4,7 +4,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 
 def post_list(request):
-    pass
+    return render(request, 'blog/index.html')
 
 def post_detail(request, slug):
     pass
