@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
+from django.contrib import messages
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')
+    posts = Post.objects.filter(published_date__isnull=False, status='published').order_by('-published_date')
     return render(request, 'blog/index.html', {'posts': posts})
 
 def post_detail(request, slug):
@@ -46,4 +47,12 @@ def add_comment(request, slug):
 def comment_approve(request, pk):
     pass
 
+@login_required
+def post_delete(request, pk):
+    try:
+        post = get_object_or_404(Post, pk=pk)
+        post.delete()
+    except Exception as e:
+        pass
+    return redirect('dashboard')
 
