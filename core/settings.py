@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Modules
     'ckeditor',
+    'widget_tweaks',
 
     # Apps
     'blog',

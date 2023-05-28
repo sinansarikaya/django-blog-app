@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+{% load widget_tweaks %}
 
 <div class="row h-100 justify-content-center align-items-center">
     <div class="col-md-6">
@@ -14,12 +15,14 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-group mb-3">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        {{ form.username|add_class:"form-control"|attr:"placeholder:Username"|attr:"required" }}
+                        {{ form.username.errors }}
                     </div>
                     <div class="form-group mb-4">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                        {{ form.password|add_class:"form-control"|attr:"placeholder:Password"|attr:"required" }}
+                        {{ form.password.errors }}
                     </div>
                     <button type="submit" class="btn btn-secondary">Login</button>
                 </form>
