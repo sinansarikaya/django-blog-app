@@ -6,7 +6,7 @@ from .forms import RegisterForm
 from django.contrib import messages
 
 def dashboard(request):
-    posts = Post.objects.order_by('-published_date')
+    posts = Post.objects.filter(author=request.user).order_by('-published_date')
     return render(request, 'users/dashboard.html', {'posts':posts})
 
 def profile(request):

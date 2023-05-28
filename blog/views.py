@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 def post_list(request):
     posts = Post.objects.filter(published_date__isnull=False, status='published').order_by('-published_date')
@@ -16,7 +17,7 @@ def post_detail(request, slug):
 @login_required
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -29,6 +30,10 @@ def post_create(request):
 @login_required
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
+
+    if post.author != request.user:
+        raise PermissionDenied()
+
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
@@ -49,14 +54,18 @@ def add_comment(request, slug):
             comment.author = request.user
             comment.save()
             return redirect('post_detail', slug=post.slug)
-    else:  # Corrected indentation here
+    else:
         form = CommentForm()
     return render(request, 'post_detail', {'form': form, 'post': post})
 
 @login_required
 def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if post.author != request.user:
+        raise PermissionDenied()
+
     try:
-        post = get_object_or_404(Post, pk=pk)
         post.delete()
     except Exception as e:
         pass

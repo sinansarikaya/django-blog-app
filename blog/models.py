@@ -8,7 +8,7 @@ class Post(models.Model):
     content = RichTextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     summary = models.TextField(max_length=255)
-    featured_image = models.ImageField(upload_to='featured_images/', null=False)
+    featured_image = models.ImageField(upload_to='featured_images/')
     status = models.CharField(max_length=255, choices=[('draft', 'Draft'), ('published', 'Published')])
     # categories = models.ManyToManyField(Category, through='PostCategory')
     # tags = models.ManyToManyField(Tag, through='PostTag') 

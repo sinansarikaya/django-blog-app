@@ -8,7 +8,7 @@
 <div class="container" style="width: 100%;">
     <h2 class="text-center my-4">Add Blog</h2>
     <div class="card bg-light shadow p-4">
-        <form method="POST" >
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
