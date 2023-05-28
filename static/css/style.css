@@ -11,3 +11,24 @@ main {
 .django-ckeditor-widget{
     width: 100%;
 }
+
+.right-card a {
+    transition: 0.3s;
+    text-decoration: none !important;
+    margin:0 auto
+}
+.right-card a:hover {
+    color: #007bff !important;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-card-header {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}

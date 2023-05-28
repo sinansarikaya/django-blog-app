@@ -38,14 +38,20 @@ def post_edit(request, slug):
         form = PostForm(instance=post)
     return render(request, 'blog/edit_post.html', {'form': form})
 
-
 @login_required
 def add_comment(request, slug):
-    pass
-
-@login_required
-def comment_approve(request, pk):
-    pass
+    post = get_object_or_404(Post, slug=slug)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('post_detail', slug=post.slug)
+    else:  # Corrected indentation here
+        form = CommentForm()
+    return render(request, 'post_detail', {'form': form, 'post': post})
 
 @login_required
 def post_delete(request, pk):
