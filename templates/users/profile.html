@@ -5,30 +5,43 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2 class="text-center my-4">Profile</h2>
-    <div class="card bg-light p-4">
-        <form>
-            <div class="form-group mb-3">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="JohnDoe" required>
-            </div>
-            <div class="form-group mb-3">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" value="john.doe@example.com" required>
-            </div>
-            <div class="form-group mb-3">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="form-group mb-3">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-        </form>
+{% load widget_tweaks %}
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+    <h2 class="text-center mb-4">Profile</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+        <label for="{{ user_form.username.id_for_label }}" class="form-label">Username</label>
+        {% render_field user_form.username class="form-control" %}
+        </div>
+        <div class="mb-3">
+        <label for="{{ user_form.first_name.id_for_label }}" class="form-label">First Name</label>
+        {% render_field user_form.first_name class="form-control" %}
+        </div>
+        <div class="mb-3">
+        <label for="{{ user_form.last_name.id_for_label }}" class="form-label">Last Name</label>
+        {% render_field user_form.last_name class="form-control" %}
+        </div>
+        <div class="mb-3">
+        <label for="{{ user_form.email.id_for_label }}" class="form-label">Email</label>
+        {% render_field user_form.email class="form-control" %}
+        </div>
+        <div class="mb-3">
+        <label for="{{ password_form.old_password.id_for_label }}" class="form-label">Old Password</label>
+        {% render_field password_form.old_password class="form-control" %}
+        </div>
+        <div class="mb-3">
+        <label for="{{ password_form.new_password1.id_for_label }}" class="form-label">New Password</label>
+        {% render_field password_form.new_password1 class="form-control" %}
+        </div>
+        <div class="mb-3">
+        <label for="{{ password_form.new_password2.id_for_label }}" class="form-label">Confirm New Password</label>
+        {% render_field password_form.new_password2 class="form-control" %}
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
     </div>
 </div>
 {% endblock %}

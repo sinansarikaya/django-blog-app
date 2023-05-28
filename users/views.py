@@ -1,16 +1,32 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from blog.models import Post
-from .forms import RegisterForm
+from .forms import RegisterForm, UserUpdateForm, CustomPasswordChangeForm
 from django.contrib import messages
+
 
 def dashboard(request):
     posts = Post.objects.filter(author=request.user).order_by('-published_date')
     return render(request, 'users/dashboard.html', {'posts':posts})
 
+@login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user, request.POST)
+        
+        if user_form.is_valid() and password_form.is_valid():
+            user_form.save()
+            password_form.save()
+            update_session_auth_hash(request, password_form.user)
+            return redirect('profile')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user)
+
+    return render(request, 'users/profile.html', {'user_form': user_form, 'password_form': password_form})
 
 def login_view(request):
     if request.method == 'POST':
