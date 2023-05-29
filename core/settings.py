@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from google.oauth2 import service_account
+from google.cloud import storage
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     # Modules
     'ckeditor',
     'widget_tweaks',
+    'storages',
 
     # Apps
     'blog',
@@ -137,9 +141,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_DIRS = [MEDIA_ROOT]
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_DIRS = [MEDIA_ROOT]
 
 LOGIN_URL = 'login'  
 LOGIN_REDIRECT_URL = '/' 
@@ -150,6 +154,20 @@ LOGIN_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+service_account_json_str = config('GOOGLE_CREDENTIALS_JSON')
+service_account_info = json.loads(service_account_json_str)
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_info(service_account_info)
+GS_BUCKET_NAME = config('GS_BUCKET_NAME') 
+GS_PROJECT_ID = config('GS_PROJECT_ID') 
+
+
+MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
+
+# Dosya depolama ayarları
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 CKEDITOR_CONFIGS = {
         'default' : {
