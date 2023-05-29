@@ -29,32 +29,37 @@
         <p>No posts found.</p>
       {% endfor %}
     </div>
-    <div class="col-lg-4">
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search..."
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-secondary" type="button">Search</button>
-      </div>
-      <div class="right-card card bg-light p-4">
-        <h5 class="right-card-header">Account</h5> <!-- Başlığı buraya taşı ve ortala -->
-        {% if user.is_authenticated %}
-          <p>Welcome, {{ user.username }}!</p>
-          <a href="{% url 'profile' %}" class="text-dark account-item">Profile</a>
-          <hr>
-          <a href="{% url 'add_post' %}" class="text-dark account-btn">Add Blog</a>
-          <hr>
-          <a href="{% url 'logout' %}" class="text-dark account-btn">Logout</a>
-        {% else %}
-          <a href="{% url 'login' %}" class="text-dark account-btn">Login</a>
-          <hr>
-          <a href="{% url 'register' %}" class="text-dark account-btn">Register</a>
-        {% endif %}
+    <div class="col-md-4">
+      <div class="position-sticky" style="top: 2rem;">
+        <div class="p-4 mb-3 bg-body-tertiary rounded">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-secondary" type="button">Search</button>
+          </div>
+          <div class="right-card card bg-light p-4">
+            <h5 class="right-card-header">Account</h5> <!-- Başlığı buraya taşı ve ortala -->
+            {% if user.is_authenticated %}
+              <p>Welcome, {{ user.username }}!</p>
+              <a href="{% url 'profile' %}" class="text-dark account-item">Profile</a>
+              <hr>
+              <a href="{% url 'add_post' %}" class="text-dark account-btn">Add Blog</a>
+              <hr>
+              <a href="{% url 'logout' %}" class="text-dark account-btn">Logout</a>
+            {% else %}
+              <a href="{% url 'login' %}" class="text-dark account-btn">Login</a>
+              <hr>
+              <a href="{% url 'register' %}" class="text-dark account-btn">Register</a>
+            {% endif %}
+          </div>
+        </div> 
       </div>
     </div>
+    
   </div>
 </div>
 {% endblock %}
