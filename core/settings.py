@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import config
 from google.oauth2 import service_account
-from google.cloud import storage
 import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
