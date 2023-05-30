@@ -1,0 +1,175 @@
+{% extends '../base.html' %} 
+{% block title %} {{ post.title }} - Blog Post  {% endblock %} 
+{% load static %} 
+
+{% block content %}
+<section class="blog_area p_120 single-post-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="main_blog_details">
+          <img class="img-fluid" src="{{ post.featured_image.url }}" alt="{{ post.title }}" />
+          <a href="#">
+            <h4>{{ post.title }}</h4>
+          </a>
+          <div class="user_details">
+            {% comment %} <div class="float-left">
+              <a href="#">Lifestyle</a>
+              <a href="#">Gadget</a>
+            </div> {% endcomment %}
+            <div class="float-right">
+              <div class="media">
+                <div class="media-body">
+                  <h5>{{ post.author }}</h5>
+                  <p>{{ post.published_date|date:"F d, Y" }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>
+            {{ post.content | safe }}
+          </p>
+          
+          
+        </div>
+    
+        <div class="comments-area">
+          <h4>05 Comments</h4>
+          <div class="comment-list">
+            {% for comment in comments %}
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex mb-3">
+                {% comment %}
+                <div class="thumb">
+                  <img src="img/blog/c1.jpg" alt="" />
+                </div>
+                {% endcomment %}
+                <div class="desc">
+                  <h5><a href="#">{{ comment.author }}</a></h5>
+                  <p class="date">{{ comment.created_at|date:"F d, Y" }}</p>
+                  <p class="comment">{{ comment.text }}</p>
+                </div>
+              </div>
+
+              {% comment %}
+              <div class="reply-btn">
+                <a href="" class="btn-reply text-uppercase">reply</a>
+              </div>
+              {% endcomment %}
+            </div>
+            {% empty %}
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex mb-3">
+                <div class="desc">
+                  <p class="comment">No comments yet.</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="comment-form">
+          <h4>Leave a Reply</h4>
+          <form method="POST" action="{% url 'add_comment' post.slug %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea
+                class="form-control mb-10"
+                rows="5"
+                name="text"
+                placeholder="Messege"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Messege'"
+                required=""
+              ></textarea>
+            </div>
+            <button type="submit" class="primary-btn submit_btn">
+              Post Comment
+            </button>
+          </form>
+        </div>
+        {% else %}
+            <p >Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">sign up</a> to add a comment.</p>
+        {% endif %}
+      </div>
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar position-sticky" style="top: 2rem;">
+          <aside class="single_sidebar_widget search_widget">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Posts"
+              />
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                  <i class="lnr lnr-magnifier"></i>
+                </button>
+              </span>
+            </div>
+            <!-- /input-group -->
+            <div class="br"></div>
+          </aside>
+
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Account</h4>
+            <ul class="list cat-list">
+              {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}!</p>
+              <li>
+                <a href="{% url 'profile' %}" class="d-flex justify-content-between">
+                  <p>Profile</p>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'add_post' %}" class="d-flex justify-content-between">
+                  <p>Add Blog</p>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'logout' %}" class="d-flex justify-content-between">
+                  <p>Logout</p>
+                </a>
+              </li>
+              {% else %}
+              <li>
+                <a href="{% url 'login' %}" class="d-flex justify-content-between">
+                  <p>Login</p>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'register' %}" class="d-flex justify-content-between">
+                  <p>Register</p>
+                </a>
+              </li>
+
+              {% endif %}
+            </ul>
+            <div class="br"></div>
+          </aside>
+
+          <aside class="single-sidebar-widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+              <li><a href="#">Technology</a></li>
+              <li><a href="#">Fashion</a></li>
+              <li><a href="#">Architecture</a></li>
+              <li><a href="#">Fashion</a></li>
+              <li><a href="#">Food</a></li>
+              <li><a href="#">Technology</a></li>
+              <li><a href="#">Lifestyle</a></li>
+              <li><a href="#">Art</a></li>
+              <li><a href="#">Adventure</a></li>
+              <li><a href="#">Food</a></li>
+              <li><a href="#">Lifestyle</a></li>
+              <li><a href="#">Adventure</a></li>
+            </ul>
+            <div class="br"></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

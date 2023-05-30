@@ -78,6 +78,42 @@
             <!-- /input-group -->
             <div class="br"></div>
           </aside>
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Account</h4>
+            <ul class="list cat-list">
+              {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}!</p>
+              <li>
+                <a href="{% url 'profile' %}" class="d-flex justify-content-between">
+                  <p>Profile</p>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'add_post' %}" class="d-flex justify-content-between">
+                  <p>Add Blog</p>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'logout' %}" class="d-flex justify-content-between">
+                  <p>Logout</p>
+                </a>
+              </li>
+              {% else %}
+              <li>
+                <a href="{% url 'login' %}" class="d-flex justify-content-between">
+                  <p>Login</p>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'register' %}" class="d-flex justify-content-between">
+                  <p>Register</p>
+                </a>
+              </li>
+
+              {% endif %}
+            </ul>
+            <div class="br"></div>
+          </aside>
           <aside class="single_sidebar_widget author_widget">
             <img
               class="author_img img-fluid"
@@ -101,6 +137,7 @@
             </div>
             <div class="br"></div>
           </aside>
+          
           <aside class="single_sidebar_widget popular_post_widget">
             <h3 class="widget_title">Popular Posts</h3>
 
@@ -120,126 +157,10 @@
           
             <div class="br"></div>
           </aside>
-          <aside class="single_sidebar_widget post_category_widget">
-            <h4 class="widget_title">Post Catgories</h4>
-            <ul class="list cat-list">
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Technology</p>
-                  <p>37</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Lifestyle</p>
-                  <p>24</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Fashion</p>
-                  <p>59</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Art</p>
-                  <p>29</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Food</p>
-                  <p>15</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Architecture</p>
-                  <p>09</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Adventure</p>
-                  <p>44</p>
-                </a>
-              </li>
-            </ul>
-          </aside>
+          
         </div>
       </div>
     </div>
   </div>
 </section>
-
-{% comment %} <div class="container">
-  <div class="row">
-    <div class="col-lg-8">
-      {% for post in posts %}
-      <div class="card mb-4 shadow">
-        <img
-          src="{{ post.featured_image.url }}"
-          class="card-img-top"
-          alt="{{ post.title }}"
-        />
-        <div class="card-body">
-          <h5 class="card-title">
-            <a href="{% url 'post_detail' post.slug %}"> {{ post.title }} </a>
-          </h5>
-          <p class="card-text">{{ post.summary }}</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">{{ post.created_at|date:"F d, Y"}}</small>
-          <small class="text-muted">Author: {{ post.author }}</small>
-          <!-- Yazarı buraya ekleyin -->
-        </div>
-      </div>
-      {% empty %}
-      <p>No posts found.</p>
-      {% endfor %}
-    </div>
-    <div class="col-md-4">
-      <div class="position-sticky" style="top: 2rem">
-        <div class="p-4 mb-3 bg-body-tertiary rounded">
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-secondary" type="button">
-              Search
-            </button>
-          </div>
-          <div class="right-card card bg-light p-4">
-            <h5 class="right-card-header">Account</h5>
-            <!-- Başlığı buraya taşı ve ortala -->
-            {% if user.is_authenticated %}
-            <p>Welcome, {{ user.username }}!</p>
-            <a href="{% url 'profile' %}" class="text-dark account-item"
-              >Profile</a
-            >
-            <hr />
-            <a href="{% url 'add_post' %}" class="text-dark account-btn"
-              >Add Blog</a
-            >
-            <hr />
-            <a href="{% url 'logout' %}" class="text-dark account-btn"
-              >Logout</a
-            >
-            {% else %}
-            <a href="{% url 'login' %}" class="text-dark account-btn">Login</a>
-            <hr />
-            <a href="{% url 'register' %}" class="text-dark account-btn"
-              >Register</a
-            >
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> {% endcomment %}
 {% endblock %}
