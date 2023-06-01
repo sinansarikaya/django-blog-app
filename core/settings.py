@@ -171,7 +171,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 CKEDITOR_CONFIGS = {
         'default' : {
             'toolbar' : 'full',
-            'height' : 400,
+            'height' : 300,
             'width': '100%', 
         }
     }

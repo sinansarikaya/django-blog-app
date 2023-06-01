@@ -1,0 +1,20 @@
+{% extends '../base.html' %} 
+{% block title %} 
+{{ post.title }} Add Post  {% endblock %} 
+{% load static %} 
+
+{% block content %}
+<div class="container mb-5">
+  <h2 class="text-center my-4">Add Blog</h2>
+  <div class="card bg-light shadow p-4">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %} 
+      {{ form.media }} 
+      {{ form.as_p }}
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Add Blog</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
