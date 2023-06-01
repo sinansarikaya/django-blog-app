@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -24,6 +25,17 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        
+        unique_slug = self.slug
+        counter = 1
+        while Post.objects.filter(slug=unique_slug).exclude(id=self.id).exists():
+            unique_slug = f"{self.slug}-{counter}"
+            counter += 1
+            
+        self.slug = unique_slug
+        
         if self.status == 'published' and not self.published_date:
             self.published_date = timezone.now()
         super().save(*args, **kwargs)

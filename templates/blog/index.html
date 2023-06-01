@@ -20,9 +20,9 @@
                   <a href="#"
                     ><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.created_at|date:"F d, Y"}}</a
                   >
-                  <a href="#"
+                  {% comment %} <a href="#"
                     ><i class="fa fa-comments-o" aria-hidden="true"></i> 05</a
-                  >
+                  > {% endcomment %}
                 </div>
                 <a href="{% url 'post_detail' post.slug %}"><h4>{{ post.title }}</h4></a>
                 <p>{{ post.summary }}</p>
@@ -33,7 +33,7 @@
           {% empty %}
           <p>No posts found.</p>
           {% endfor %}
-          <nav class="blog-pagination justify-content-center d-flex">
+          {% comment %} <nav class="blog-pagination justify-content-center d-flex">
             <ul class="pagination">
               <li class="page-item">
                 <a href="#" class="page-link" aria-label="Previous">
@@ -57,7 +57,7 @@
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> {% endcomment %}
         </div>
       </div>
       <div class="col-lg-4">

@@ -7,10 +7,20 @@
 <div class="container mb-5">
   <h2 class="text-center my-4">Add Blog</h2>
   <div class="card bg-light shadow p-4">
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" action="{% url 'add_post' %}">
       {% csrf_token %} 
       {{ form.media }} 
-      {{ form.as_p }}
+      {% for field in form %}
+        {% if field.name != "slug" %}
+          <p>
+            <label for="{{ field.auto_id }}">{{ field.label }}:</label>
+            {{ field }}
+            {% if field.help_text %}
+              <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+          </p>
+        {% endif %}
+      {% endfor %}
       <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-primary">Add Blog</button>
       </div>

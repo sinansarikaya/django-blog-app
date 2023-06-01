@@ -31,12 +31,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'index' %}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
+             
                     </ul>
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
@@ -59,6 +54,13 @@
             </div>
         </nav>
     </header>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message | safe}}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     
     {% block content %}
@@ -68,7 +70,7 @@
     <!--================ start footer Area  =================-->
     <footer class="footer-area  py-4">
       <div class="container">
-        <p class="text-center mb-0">&copy; {% now "Y" %} Sinan Sarikaya. All rights reserved.</p>
+        <p class="text-center text-light mb-0">&copy; {% now "Y" %} Sinan Sarikaya. All rights reserved.</p>
       </div>
     </footer>
     <!--================ End footer Area  =================-->
