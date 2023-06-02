@@ -8,7 +8,7 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="main_blog_details">
-          <img class="img-fluid" src="{{ post.featured_image.url }}" alt="{{ post.title }}" />
+          <img class="img-fluid shadow" src="{{ post.featured_image.url }}" alt="{{ post.title }}" />
           <a href="#">
             <h4>{{ post.title }}</h4>
           </a>
@@ -94,19 +94,23 @@
         {% endif %}
       </div>
       <div class="col-lg-4">
-        <div class="blog_right_sidebar position-sticky" style="top: 2rem;">
+        <div class="blog_right_sidebar position-sticky shadow" style="top: 2rem;">
           <aside class="single_sidebar_widget search_widget">
             <div class="input-group">
-              <input
+              <form method="GET" class="d-flex align-items-center col-12">
+                {% csrf_token %}
+                <input
                 type="text"
                 class="form-control"
                 placeholder="Search Posts"
-              />
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">
-                  <i class="lnr lnr-magnifier"></i>
+                name="search" />
+
+                
+                <button class="btn btn-secondary border-1 rounded-0 p-2" type="submit" value="Search"> 
+                  Search
                 </button>
-              </span>
+               
+              </form>
             </div>
             <!-- /input-group -->
             <div class="br"></div>

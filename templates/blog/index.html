@@ -11,10 +11,10 @@
           {% for post in posts %}
           <article class="blog_style1">
             <div class="blog_img">
-              <img class="img-fluid" src="{{ post.featured_image.url }}" alt="{{ post.title }}" />
+              <img class="img-fluid shadow" src="{{ post.featured_image.url }}" alt="{{ post.title }}" />
             </div>
             <div class="blog_text">
-              <div class="blog_text_inner">
+              <div class="blog_text_inner shadow">
                 <div class="cat">
                   <a class="cat_btn" href="#">{{ post.author }}</a>
                   <a href="#"
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="blog_right_sidebar">
+        <div class="blog_right_sidebar shadow">
           <aside class="single_sidebar_widget search_widget">
             <div class="input-group">
               <form method="GET" class="d-flex align-items-center col-12">
@@ -120,7 +120,7 @@
           </aside>
           <aside class="single_sidebar_widget author_widget">
             <img
-              class="author_img img-fluid rounded"
+              class="author_img img-fluid rounded-circle"
        
               src="{% static 'img/author.jpeg' %}"
               alt="Sinan Sarikaya"
