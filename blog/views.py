@@ -7,9 +7,20 @@ from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from django.conf import settings
 from google.cloud import storage
+from django.db.models import Q
+
+def post_search(request):
+    pass
 
 def post_list(request):
+    search = request.GET.get("search")
+    if search:
+        posts = Post.objects.filter(Q(title__icontains=search) | Q(content__icontains=search) | Q(summary__icontains=search))
+
+        return render(request, 'blog/index.html', {'posts': posts})
+    
     posts = Post.objects.filter(published_date__isnull=False, status='published').order_by('-published_date')
+
     return render(request, 'blog/index.html', {'posts': posts})
 
 def post_detail(request, slug):
@@ -74,17 +85,14 @@ def post_delete(request, pk):
         raise PermissionDenied()
 
     try:
-        # Google Cloud Storage'daki resmi sil
         if post.featured_image:
             client = storage.Client(credentials=settings.GS_CREDENTIALS)
             bucket = client.get_bucket(settings.GS_BUCKET_NAME)
             blob = bucket.blob(post.featured_image.name)
             blob.delete()
-
-        # Post'u veritabanından sil
         post.delete()
     except Exception as e:
-        print(f'Hata: {e}')  # Hata mesajını yazdır
+        print(f'Hata: {e}')  
         messages.error(request, f'Gönderi silinirken bir hata oluştu: {e}')
         return redirect('dashboard')
 
