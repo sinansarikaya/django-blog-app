@@ -2,7 +2,7 @@ asgiref==3.7.1
 cachetools==5.3.1
 certifi==2023.7.22
 charset-normalizer==3.1.0
-Django==4.2.1
+Django==4.2.3
 django-ckeditor==6.5.1
 django-decouple==2.1
 django-js-asset==2.0.0
